@@ -1,0 +1,12 @@
+C:\Projects\plutus\src\Plutus\Plutus.Domain\bin\Debug\net6.0\Plutus.Domain.deps.json
+C:\Projects\plutus\src\Plutus\Plutus.Domain\bin\Debug\net6.0\Plutus.Domain.dll
+C:\Projects\plutus\src\Plutus\Plutus.Domain\bin\Debug\net6.0\Plutus.Domain.pdb
+C:\Projects\plutus\src\Plutus\Plutus.Domain\obj\Debug\net6.0\Plutus.Domain.csproj.AssemblyReference.cache
+C:\Projects\plutus\src\Plutus\Plutus.Domain\obj\Debug\net6.0\Plutus.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\plutus\src\Plutus\Plutus.Domain\obj\Debug\net6.0\Plutus.Domain.AssemblyInfoInputs.cache
+C:\Projects\plutus\src\Plutus\Plutus.Domain\obj\Debug\net6.0\Plutus.Domain.AssemblyInfo.cs
+C:\Projects\plutus\src\Plutus\Plutus.Domain\obj\Debug\net6.0\Plutus.Domain.csproj.CoreCompileInputs.cache
+C:\Projects\plutus\src\Plutus\Plutus.Domain\obj\Debug\net6.0\Plutus.Domain.dll
+C:\Projects\plutus\src\Plutus\Plutus.Domain\obj\Debug\net6.0\refint\Plutus.Domain.dll
+C:\Projects\plutus\src\Plutus\Plutus.Domain\obj\Debug\net6.0\Plutus.Domain.pdb
+C:\Projects\plutus\src\Plutus\Plutus.Domain\obj\Debug\net6.0\ref\Plutus.Domain.dll
