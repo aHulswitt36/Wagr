@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Plutus;
 using Plutus.Domain.Interfaces;
+using Plutus.Domain.Models.Entities;
 using Plutus.Domain.Settings;
 using Plutus.Infrastructure;
 
@@ -12,6 +13,10 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 var settings = new Settings();
 builder.Configuration.GetSection("Settings").Bind(settings);
 builder.Services.AddSingleton(settings);
+
+//Temporary
+builder.Services.AddSingleton(new Account());
+
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(settings.CircleBaseUrl)});
 
 builder.Services.AddTransient<ICirclePaymentsRepo, CirclePaymentsRepo>();

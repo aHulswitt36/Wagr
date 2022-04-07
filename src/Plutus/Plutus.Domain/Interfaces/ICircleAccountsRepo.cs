@@ -9,7 +9,7 @@ namespace Plutus.Domain.Interfaces
 {
     public interface ICircleAccountsRepo
     {
-        Task<CreateCircleAccountResponse> CreateAccount();
+        Task<CreateCircleAccountResponse> CreateAccount(string walletName);
 
     }
 }

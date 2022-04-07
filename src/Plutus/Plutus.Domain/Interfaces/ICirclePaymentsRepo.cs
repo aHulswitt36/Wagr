@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plutus.Domain.Models.Responses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace Plutus.Domain.Interfaces
 {
     public interface ICirclePaymentsRepo
     {
+        Task<CircleGetPublicKeyResponse> GetPgpPublicKey();
 
+        Task<CircleCreateCardResponse> CreateCard();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Plutus.Domain.Interfaces;
 using Plutus.Domain.Models.DTO;
+using Plutus.Domain.Models.Entities;
 using System.Linq;
 
 namespace Plutus.Pages
@@ -11,23 +12,24 @@ namespace Plutus.Pages
         private NavigationManager _navigationManager { get; set; }
 
         [Inject]
-        private ICircleAccountsRepo _circleAccountsRepo { get; set; }
+        private Account Account { get; set; }
 
-        private bool _accountCreated { get; set; }
-        private CircleAccountDto account { get; set; }
-
-        public async Task CreateAccount()
+        protected override void OnInitialized()
         {
-            var newAccount = (await _circleAccountsRepo.CreateAccount()).Data;
-            account = new CircleAccountDto
+            Account.OnChange += OnChange;
+        }
+
+        public void OnChange()
+        {
+            InvokeAsync(() =>
             {
-                WalletId = newAccount.WalletId,
-                Type = newAccount.Type,
-                Description = newAccount.Description,
-                Balances = MapWalletBalances(newAccount.Balances)
-            };
-            _accountCreated = true;
-            //_navigationManager.NavigateTo("/Account/Create");
+                StateHasChanged();
+            });
+        }
+
+        public async Task NavigateToCreateAccount()
+        {            
+            _navigationManager.NavigateTo("/Account/Create");
         }
 
         private List<CircleBalanceDto> MapWalletBalances(List<Domain.Models.Responses.CircleAccountBalance> balances)

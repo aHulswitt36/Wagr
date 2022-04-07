@@ -1,0 +1,20 @@
+﻿@page "/Account/AddPaymentMethod"
+
+<h3>Add Payment Method</h3>
+
+<input @bind="Amount" placeholder="Amount"/>
+
+<input @bind="CardNumber" placeholder="CardNumber" type='number'/>
+
+<input @bind="CVV" placeholder="CVV" type='number'/>
+ 
+<input @bind="Expiry" placeholder="Expiration Date"/>
+
+<input @bind="Description" placeholder="Description"/>
+
+<input @bind="Channel" placeholder="Channel"/>
+
+<br/>
+<br/>
+
+<button @onclick="MakePayment">Fund Wallet</button>

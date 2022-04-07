@@ -1,4 +1,36 @@
 ﻿@page "/Account/Create"
 
+<NavLink class="nav-link" href="">
+    <span class="oi oi-arrow-left" aria-hidden="true"></span> Home
+</NavLink>
 <h3>CreateAccount</h3>
+
+@if (!_accountCreated)
+{
+    <h5>Wallet Name:</h5> <input @bind="WalletName" type="text"/>
+    <h5>Email:</h5> <input @bind="Email" type="email"/>
+    <h5>Password:</h5> <input @bind="Password" type="password"/>
+    <br />
+    
+    <button id="Login" @onclick="OnClick_CreateAccount">CreateAccount</button>
+}
+
+@if(_accountCreated)
+{
+
+    <h5>Wallet ID: @Account.Wallet.WalletId</h5>
+    <h5>Type: @Account.Wallet.Type</h5>
+    <h5>Description: @Account.Wallet.Description</h5>
+    <h5>Balances:</h5>
+    @foreach(var balance in Account.Wallet.Balances)
+    {
+        <h6>Amount: @balance.Amount</h6>
+        <h6>Currency: @balance.Currency</h6>
+    }
+
+    <br/>
+    <br/>
+
+    <button onclick="FundWallet">Fund wallet</button>
+}
 
