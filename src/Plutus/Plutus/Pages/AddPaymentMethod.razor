@@ -2,13 +2,11 @@
 
 <h3>Add Payment Method</h3>
 
-<input @bind="Amount" placeholder="Amount"/>
+<input @bind="CardNumber" placeholder="CardNumber" type='number' id="cardNumber"/>
 
-<input @bind="CardNumber" placeholder="CardNumber" type='number'/>
-
-<input @bind="CVV" placeholder="CVV" type='number'/>
+<input @bind="CVV" placeholder="CVV" type='number' id="cvv"/>
  
-<input @bind="Expiry" placeholder="Expiration Date"/>
+<input @bind="ExpMonth" placeholder="Exp Month"/> <input @bind="ExpYear" placeholder="Exp Year"/>
 
 <input @bind="Description" placeholder="Description"/>
 

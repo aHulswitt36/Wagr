@@ -9,6 +9,9 @@ namespace Plutus.Domain.Models.Requests
 {
     public class CircleCreateCardRequest : BaseCircleRequest
     {
+        [JsonProperty("idempotencyKey")]
+        public string IdempotencyKey { get; set; }
+
         [JsonProperty("keyId")]
         public string KeyId { get; set; }
 
