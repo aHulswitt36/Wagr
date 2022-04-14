@@ -10,6 +10,7 @@ using Plutus.Domain.Models.Entities;
 using Plutus.Domain.Settings;
 using Plutus.Infrastructure;
 using System.Net.Http.Headers;
+using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -34,4 +35,6 @@ builder.Services.AddTransient<IPaymentsQuery, PaymentsQuery>();
 
 builder.Services.AddTransient<ICirclePaymentsRepo, CirclePaymentsRepo>();
 builder.Services.AddTransient<ICircleAccountsRepo, CircleAccountsRepo>();
+
+builder.Services.AddMudServices();
 await builder.Build().RunAsync();

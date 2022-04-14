@@ -2,36 +2,36 @@
 
 <h3>Add Payment Method</h3>
 
-<input @bind="CardNumber" placeholder="CardNumber" type='number' id="cardNumber"/>
+<MudTextField @bind-Value="CardNumber" label="CardNumber" Variant="Variant.Text" type='number' id="cardNumber"/>
 <br/>
 
-<input @bind="CVV" placeholder="CVV" type='number' id="cvv"/>
+<MudTextField @bind-Value="CVV" label="CVV" Variant="Variant.Text" MaxLength="4" type='number' id="cvv"/>
 <br/>
  
-<input @bind="ExpMonth" placeholder="Exp Month" type="number" min="1" max="12" maxlength="2"/> <input @bind="ExpYear" placeholder="Exp Year" type="number" min="2021" maxlength="4"/>
+<MudTextField @bind-Value="ExpMonth" label="Exp Month" Variant="Variant.Text" type="number" min="1" max="12" MaxLength="2"/> <MudTextField @bind-Value="ExpYear" Variant="Variant.Text" label="Exp Year" type="number" min="2021" MaxLength="4"/>
 <br/>
 
 
-<h4>Billing Details</h4>
-<input @bind="Name" placeholder="Cardholder Name"/>
+<h3>Billing Details</h3>
+<MudTextField @bind-Value="Name" label="Cardholder Name" Variant="Variant.Text" />
 <br/>
-<input @bind="Address1" placeholder="Address 1"/>
+<MudTextField @bind-Value="Address1" label="Address 1" Variant="Variant.Text" />
 <br/>
-<input @bind="Address2" placeholder="Address 2"/>
+<MudTextField @bind-Value="Address2" label="Address 2" Variant="Variant.Text" />
 <br/>
-<input @bind="City" placeholder="City"/>
+<MudTextField @bind-Value="City" label="City" Variant="Variant.Text"/>
 <br/>
-<input @bind="District" placeholder="State/Province"/>
+<MudTextField @bind-Value="District" label="State/Province" Variant="Variant.Text"/>
 <br/>
-<input @bind="PostalCode" placeholder="PostalCode"/>
+<MudTextField @bind-Value="PostalCode" label="PostalCode" Variant="Variant.Text"/>
 <br/>
-<input @bind="Country" placeholder="Country Code"/>
+<MudTextField @bind-Value="Country" label="Country Code" Variant="Variant.Text"/>
 <br/>
-<input @bind="PhoneNumber" placeholder="Phone Number"/>
+<MudTextField @bind-Value="PhoneNumber" label="Phone Number" Variant="Variant.Text"/>
 <br/>
-<input @bind="Email" placeholder="Email"/>
+<MudTextField @bind-Value="Email" label="Email" Variant="Variant.Text"/>
 <br/>
 <br/>
 <br/>
 
-<button @onclick="CreatePayment">Fund Wallet</button>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="CreatePayment">Add Payment Method</MudButton>

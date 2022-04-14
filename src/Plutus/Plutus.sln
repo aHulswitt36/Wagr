@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plutus.Domain", "Plutus.Dom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plutus.Infrastructure", "Plutus.Infrastructure\Plutus.Infrastructure.csproj", "{08CE3C48-6146-4E99-BEDD-BEF47224C9FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plutus.Application", "Plutus.Application\Plutus.Application.csproj", "{F3E6F665-EF46-4997-A943-524286B5589B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plutus.Application", "Plutus.Application\Plutus.Application.csproj", "{F3E6F665-EF46-4997-A943-524286B5589B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
