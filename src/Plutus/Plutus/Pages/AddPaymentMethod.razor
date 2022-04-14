@@ -2,7 +2,8 @@
 
 <h3>Add Payment Method</h3>
 
-<MudTextField @bind-Value="CardNumber" label="CardNumber" Variant="Variant.Text" type='number' id="cardNumber"/>
+@*<MudTextField @bind-Value="CardNumber" label="CardNumber" Variant="Variant.Text" type='number' id="cardNumber"/>*@
+<CardInput @bind-CardNumber="CardNumber"/>
 <br/>
 
 <MudTextField @bind-Value="CVV" label="CVV" Variant="Variant.Text" MaxLength="4" type='number' id="cvv"/>

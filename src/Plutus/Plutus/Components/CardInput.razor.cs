@@ -4,31 +4,31 @@ namespace Plutus.Components
 {
     public partial class CardInput : ComponentBase
     {
+        private string? _cardNumber;
+        [Parameter]
+        public string CardNumber { get; set; }
 
-        private string Value { get; set; }
+        [Parameter]
+        public EventCallback<string> CardNumberChanged { get; set; }
 
-        private string ValidationErrors { get; set; }
-
-        private async Task<bool> Rules()
+        private async Task OnCardNumberChanged(ChangeEventArgs args)
         {
-            try
-            {
-                if (!IsValid())
-                    throw new Exception("Please enter valid Credit Card");
-                if (!IsRequired())
-                    throw new Exception("Please enter a Credit Card number");
-                return true;
-            }
-            catch (Exception e)
-            {
-                ValidationErrors = e.Message;
-                return false;
-            }
+            _cardNumber = args?.Value?.ToString();
+
+            await CardNumberChanged.InvokeAsync(_cardNumber);
+        }
+
+        private IEnumerable<string> RunRules(string input)
+        {
+            if (!IsValid())
+                yield return "Please enter valid Credit Card";
+            if (!IsRequired())
+                yield return "Please enter a Credit Card number";            
         }
 
         private bool IsValid()
         {
-            var trimmed = Value.Trim().Replace(" ", "");
+            var trimmed = CardNumber.Trim().Replace(" ", "");
             if(string.IsNullOrWhiteSpace(trimmed) || trimmed.Length < 15 || trimmed.Length > 16)
                 return false;
 
@@ -37,7 +37,7 @@ namespace Plutus.Components
 
         private bool IsRequired()
         {
-            return string.IsNullOrEmpty(Value.Trim());
+            return !string.IsNullOrEmpty(CardNumber.Trim());
         }
     }
 }
