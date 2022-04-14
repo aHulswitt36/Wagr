@@ -3,16 +3,35 @@
 <h3>Add Payment Method</h3>
 
 <input @bind="CardNumber" placeholder="CardNumber" type='number' id="cardNumber"/>
+<br/>
 
 <input @bind="CVV" placeholder="CVV" type='number' id="cvv"/>
+<br/>
  
-<input @bind="ExpMonth" placeholder="Exp Month"/> <input @bind="ExpYear" placeholder="Exp Year"/>
-
-<input @bind="Description" placeholder="Description"/>
-
-<input @bind="Channel" placeholder="Channel"/>
-
-<br/>
+<input @bind="ExpMonth" placeholder="Exp Month" type="number" min="1" max="12" maxlength="2"/> <input @bind="ExpYear" placeholder="Exp Year" type="number" min="2021" maxlength="4"/>
 <br/>
 
-<button @onclick="MakePayment">Fund Wallet</button>
+
+<h4>Billing Details</h4>
+<input @bind="Name" placeholder="Cardholder Name"/>
+<br/>
+<input @bind="Address1" placeholder="Address 1"/>
+<br/>
+<input @bind="Address2" placeholder="Address 2"/>
+<br/>
+<input @bind="City" placeholder="City"/>
+<br/>
+<input @bind="District" placeholder="State/Province"/>
+<br/>
+<input @bind="PostalCode" placeholder="PostalCode"/>
+<br/>
+<input @bind="Country" placeholder="Country Code"/>
+<br/>
+<input @bind="PhoneNumber" placeholder="Phone Number"/>
+<br/>
+<input @bind="Email" placeholder="Email"/>
+<br/>
+<br/>
+<br/>
+
+<button @onclick="CreatePayment">Fund Wallet</button>

@@ -11,7 +11,7 @@ namespace Plutus.Domain.Models.Responses
     public class CircleCreateCard
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("status")]
         public string Status { get; set; }
         [JsonProperty("billingDetails")]
@@ -42,9 +42,11 @@ namespace Plutus.Domain.Models.Responses
         [JsonProperty("verification")]
         public CirlceCreateCardVerification Verification { get; set; }
 
+        [JsonProperty("riskEvaluation")]
         public CircleCreateCardRiskEvaluation RiskEvaluation { get; set; }
 
-        public CircleCreatePaymentMetadata Metadat { get; set; }
+        [JsonProperty("metadata")]
+        public CircleCreatePaymentMetadata Metadata { get; set; }
     }
 
     public class CircleCreateCardRiskEvaluation

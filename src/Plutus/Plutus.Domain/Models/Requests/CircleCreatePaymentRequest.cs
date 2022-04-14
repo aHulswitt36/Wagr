@@ -64,7 +64,7 @@ namespace Plutus.Domain.Models.Requests
         [JsonProperty("phoneNumber")]
         public string? PhoneNumber { get; set; }
 
-        [JsonProperty("sesionId")]
+        [JsonProperty("sessionId")]
         public string SessionId { get; set; }
 
         [JsonProperty("ipAddress")]

@@ -26,35 +26,23 @@ namespace Plutus.Infrastructure
             _httpClient = httpClient;
         }
 
-        public async Task<CircleCreateCardResponse> CreateCard(CreatePaymentMethodDto dto)
+        public async Task<CircleCreateCardResponse> CreateNewPayment(CircleCreateCardRequest request)
         {
-            var payload = new CircleCreateCardRequest
+            try
             {
-                IdempotencyKey = Guid.NewGuid().ToString(),
-                KeyId = dto.EncryptedData.KeyId,
-                ExpirationMonth = dto.ExpirationMonth,
-                ExpirationYear = dto.ExpirationYear,
-                EncryptedData = dto.EncryptedData.EncryptedData,
-                BillingDetails = new CircleCreateCardBillingDetails
-                {
-                    AddressLine1 = dto.Address.Address1,
-                    AddressLine2 = dto.Address.Address2,
-                    City = dto.Address.City,
-                    Country = dto.Address.Country,
-                    District = dto.Address.District,
-                    Name = dto.Name,
-                    ZipCode = dto.Address.PostalCode
-                },
-                Metadata = new CircleCreatePaymentMetadata
-                {
-                    PhoneNumber = dto.PhoneNumber, 
-                    Email = dto.Email,
-                    SessionId = Guid.NewGuid().ToString(),
-                    IpAddress = dto.IpAddress
-                }
-            };
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _settings.CircleApiKey);
+                _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
 
-            return new CircleCreateCardResponse();
+                var response = await _httpClient.PostAsync(CreatePaymentEndpoint, new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json"));
+                if(!response.IsSuccessStatusCode)
+                    throw new Exception(response.StatusCode.ToString());
+                var data = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<CircleCreateCardResponse>(data);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<CircleGetPublicKeyResponse> GetPgpPublicKey()
@@ -72,7 +60,6 @@ namespace Plutus.Infrastructure
             }
             catch (Exception)
             {
-
                 throw;
             }
             

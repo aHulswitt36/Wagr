@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Plutus.Application\Plutus.Application.csproj" />
     <ProjectReference Include="..\Plutus.Domain\Plutus.Domain.csproj" />
     <ProjectReference Include="..\Plutus.Infrastructure\Plutus.Infrastructure.csproj" />
   </ItemGroup>

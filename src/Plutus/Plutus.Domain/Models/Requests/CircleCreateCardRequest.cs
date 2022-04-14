@@ -47,6 +47,6 @@ namespace Plutus.Domain.Models.Requests
         [JsonProperty("district")]
         public string District { get; set; }
         [JsonProperty("postalCode")]
-        public string ZipCode { get; set; }
+        public string PostalCode { get; set; }
     }
 }

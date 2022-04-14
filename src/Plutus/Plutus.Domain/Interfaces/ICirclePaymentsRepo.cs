@@ -1,10 +1,5 @@
-﻿using Plutus.Domain.Models.DTO;
+﻿using Plutus.Domain.Models.Requests;
 using Plutus.Domain.Models.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Plutus.Domain.Interfaces
 {
@@ -12,6 +7,6 @@ namespace Plutus.Domain.Interfaces
     {
         Task<CircleGetPublicKeyResponse> GetPgpPublicKey();
 
-        Task<CircleCreateCardResponse> CreateCard(CreatePaymentMethodDto dto);
+        Task<CircleCreateCardResponse> CreateNewPayment(CircleCreateCardRequest request);
     }
 }

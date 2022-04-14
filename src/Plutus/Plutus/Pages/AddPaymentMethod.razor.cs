@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
-using Plutus.Domain.Interfaces;
+using Plutus.Domain.Interfaces.Commands;
+using Plutus.Domain.Interfaces.Queries;
 using Plutus.Domain.Models.DTO;
 using Plutus.Domain.Models.Entities;
 using Plutus.Domain.Models.Responses;
@@ -12,7 +13,9 @@ namespace Plutus.Pages
     public partial class AddPaymentMethod : ComponentBase, IAsyncDisposable
     {
         [Inject]
-        private ICirclePaymentsRepo _circlePaymentsRepo { get; set; }
+        private IPaymentsCommand _paymentsCommand { get; set; }
+        [Inject]
+        private IPaymentsQuery _paymentsQuery { get; set; }
         [Inject]
         private IJSRuntime _jsRuntime { get; set; }
         [Inject]
@@ -27,8 +30,8 @@ namespace Plutus.Pages
         private string CardNumber { get; set; }
         private string CVV { get; set; }
         //will need its own component
-        private int ExpMonth { get; set; }
-        private int ExpYear { get; set; }
+        private string ExpMonth { get; set; }
+        private string ExpYear { get; set; }
         private string? PhoneNumber { get; set; }
         private string Address1 { get; set; }
         private string Address2 { get; set; }
@@ -36,14 +39,12 @@ namespace Plutus.Pages
         private string District { get; set; }
         private string Country { get; set; }
         private string PostalCode { get; set; }
-        private string Description { get; set; }
-        private string Channel { get; set; }
 
 
         protected override async Task OnInitializedAsync()
         {
 
-            pgpPublicKey = await _circlePaymentsRepo.GetPgpPublicKey();
+            pgpPublicKey = await _paymentsQuery.GetPgpPublicKey();
             await base.OnInitializedAsync();
         }
 
@@ -54,8 +55,6 @@ namespace Plutus.Pages
                 _jsModule = await _jsRuntime.ComponentModule<AddPaymentMethod>();
                 //_jsModule = await _jsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/Pages/AddPaymentMethod.razor.js");
             }
-
-
         }
 
         public async ValueTask DisposeAsync()
@@ -64,7 +63,7 @@ namespace Plutus.Pages
                 await _jsModule.DisposeAsync();
         }
 
-        private async Task MakePayment()
+        private async Task CreatePayment()
         {
             var encryptedData = await _jsModule.InvokeAsync<EncryptedDataDto>("encryptCardData", pgpPublicKey, CardNumber, CVV);
             var createPaymentRequest = new CreatePaymentMethodDto
@@ -72,8 +71,8 @@ namespace Plutus.Pages
                 EncryptedData = encryptedData,
                 Name = Name,
                 Email = Email,
-                ExpirationMonth = ExpMonth,
-                ExpirationYear = ExpYear,
+                ExpirationMonth = Convert.ToInt32(ExpMonth),
+                ExpirationYear = Convert.ToInt32(ExpYear),
                 PhoneNumber = PhoneNumber,
                 Address = new Address
                 {
@@ -85,7 +84,7 @@ namespace Plutus.Pages
                     PostalCode = PostalCode
                 }
             };
-            var cardDetails = await _circlePaymentsRepo.CreateCard(createPaymentRequest);
+            var cardDetails = await _paymentsCommand.AddNewPayment(createPaymentRequest);
         }
     }
 }
