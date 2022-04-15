@@ -7,6 +7,7 @@ using Plutus.Domain.Models.DTO;
 using Plutus.Domain.Models.Entities;
 using Plutus.Domain.Models.Responses;
 using Plutus.Extensions;
+using Plutus.ViewModel;
 
 namespace Plutus.Pages
 {
@@ -29,6 +30,7 @@ namespace Plutus.Pages
         private string Email { get; set; }
         private string CardNumber { get; set; }
         private string CVV { get; set; }
+        private CardExpiration Expiry { get; set; }
         //will need its own component
         private string ExpMonth { get; set; }
         private string ExpYear { get; set; }

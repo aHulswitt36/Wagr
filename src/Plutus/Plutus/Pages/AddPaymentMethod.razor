@@ -2,14 +2,15 @@
 
 <h3>Add Payment Method</h3>
 
-@*<MudTextField @bind-Value="CardNumber" label="CardNumber" Variant="Variant.Text" type='number' id="cardNumber"/>*@
 <CardInput @bind-CardNumber="CardNumber"/>
 <br/>
-
-<MudTextField @bind-Value="CVV" label="CVV" Variant="Variant.Text" MaxLength="4" type='number' id="cvv"/>
+@*
+<MudTextField @bind-Value="CVV" label="CVV" Variant="Variant.Text" MaxLength="4" type='number' id="cvv"/>*@
+<CVVInput @bind-Cvv="CVV"/>
 <br/>
  
-<MudTextField @bind-Value="ExpMonth" label="Exp Month" Variant="Variant.Text" type="number" min="1" max="12" MaxLength="2"/> <MudTextField @bind-Value="ExpYear" Variant="Variant.Text" label="Exp Year" type="number" min="2021" MaxLength="4"/>
+@*<MudTextField @bind-Value="ExpMonth" label="Exp Month" Variant="Variant.Text" type="number" min="1" max="12" MaxLength="2"/> <MudTextField @bind-Value="ExpYear" Variant="Variant.Text" label="Exp Year" type="number" min="2021" MaxLength="4"/>*@
+<CardExpiry @bind-Expiration="Expiry" />
 <br/>
 
 

@@ -1,0 +1,10 @@
+﻿@using Plutus.ViewModel
+<MudTextField
+    @bind-Value="Expiry"
+    @oninput="OnExpiryChanged"
+    InputMode="InputMode.tel"
+    Mask="@(new PatternMask("00 / 0000"))"
+    Validation="@(new Func<string, IEnumerable<string>>(Validate))"
+    Label="Expiration"
+    Placeholder="01 / 2023"
+/>
