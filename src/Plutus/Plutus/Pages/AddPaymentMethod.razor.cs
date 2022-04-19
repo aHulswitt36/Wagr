@@ -31,9 +31,6 @@ namespace Plutus.Pages
         private string CardNumber { get; set; }
         private string CVV { get; set; }
         private CardExpiration Expiry { get; set; }
-        //will need its own component
-        private string ExpMonth { get; set; }
-        private string ExpYear { get; set; }
         private string? PhoneNumber { get; set; }
         private string Address1 { get; set; }
         private string Address2 { get; set; }
@@ -73,8 +70,8 @@ namespace Plutus.Pages
                 EncryptedData = encryptedData,
                 Name = Name,
                 Email = Email,
-                ExpirationMonth = Convert.ToInt32(ExpMonth),
-                ExpirationYear = Convert.ToInt32(ExpYear),
+                ExpirationMonth = Convert.ToInt32(Expiry.Month),
+                ExpirationYear = Convert.ToInt32(Expiry.Year),
                 PhoneNumber = PhoneNumber,
                 Address = new Address
                 {

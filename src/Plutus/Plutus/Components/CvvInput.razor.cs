@@ -7,7 +7,16 @@ namespace Plutus.Components
         private string _cvv;
 
         [Parameter]
-        public string Cvv { get; set; }
+        public string Cvv 
+        { 
+            get => _cvv;
+            set
+            {
+                if (_cvv == value) return;
+                _cvv = value;
+                CvvChanged.InvokeAsync(value);
+            } 
+        }
 
         [Parameter]
         public EventCallback<string> CvvChanged { get; set; }

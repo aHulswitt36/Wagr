@@ -6,17 +6,19 @@ namespace Plutus.Components
     {
         private string? _cardNumber;
         [Parameter]
-        public string CardNumber { get; set; }
+        public string CardNumber 
+        { 
+            get => _cardNumber; 
+            set
+            {
+                if (_cardNumber == value) return;
+                _cardNumber = value;
+                CardNumberChanged.InvokeAsync(value);
+            }
+        }
 
         [Parameter]
         public EventCallback<string> CardNumberChanged { get; set; }
-
-        private async Task OnCardNumberChanged(ChangeEventArgs args)
-        {
-            _cardNumber = args?.Value?.ToString();
-
-            await CardNumberChanged.InvokeAsync(_cardNumber);
-        }
 
         private IEnumerable<string> RunRules(string input)
         {

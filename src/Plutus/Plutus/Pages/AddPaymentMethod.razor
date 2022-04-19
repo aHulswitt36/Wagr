@@ -27,7 +27,8 @@
 <br/>
 <MudTextField @bind-Value="PostalCode" label="PostalCode" Variant="Variant.Text"/>
 <br/>
-<MudTextField @bind-Value="Country" label="Country Code" Variant="Variant.Text"/>
+@*<MudTextField @bind-Value="Country" label="Country Code" Variant="Variant.Text"/>*@
+<CountrySelect @bind-Country="Country" />
 <br/>
 <MudTextField @bind-Value="PhoneNumber" label="Phone Number" Variant="Variant.Text"/>
 <br/>

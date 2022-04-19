@@ -20,6 +20,10 @@ var settings = new Settings();
 builder.Configuration.GetSection("Settings").Bind(settings);
 builder.Services.AddSingleton(settings);
 
+var countries = new List<Country>();
+builder.Configuration.GetSection("Countries").Bind(countries);
+builder.Services.AddSingleton(countries);
+
 //Temporary
 builder.Services.AddSingleton(new Account());
 

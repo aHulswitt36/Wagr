@@ -1,5 +1,4 @@
 ﻿<MudTextField @bind-Value="CardNumber"
-    @oninput="OnCardNumberChanged"
     InputMode="InputMode.tel"
     Validation="@(new Func<string,IEnumerable<string>>(RunRules))"
     Immediate="true"
