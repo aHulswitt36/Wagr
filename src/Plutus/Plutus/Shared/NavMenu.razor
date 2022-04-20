@@ -1,9 +1,8 @@
 ﻿<MudNavMenu>
     <MudNavLink Href="/" Match="NavLinkMatch.All">Home</MudNavLink>
     <MudNavGroup Title="Account" Expanded="true">
-        <MudNavLink Href="/Account/AddPaymentMethod"  Match="NavLinkMatch.Prefix">Add Payment Method</MudNavLink>
+        <MudNavLink Href="/Account/PaymentMethods"  Match="NavLinkMatch.Prefix">Payment Methods</MudNavLink>
     </MudNavGroup>
-    <MudNavLink Href="/about"  Match="NavLinkMatch.Prefix">About</MudNavLink>
 </MudNavMenu>
 @code {
     private bool collapseNavMenu = true;

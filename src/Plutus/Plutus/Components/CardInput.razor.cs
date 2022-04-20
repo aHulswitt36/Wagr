@@ -30,8 +30,10 @@ namespace Plutus.Components
 
         private bool IsValid()
         {
+            if (string.IsNullOrEmpty(CardNumber))
+                return false;
             var trimmed = CardNumber.Trim().Replace(" ", "");
-            if(string.IsNullOrWhiteSpace(trimmed) || trimmed.Length < 15 || trimmed.Length > 16)
+            if(trimmed.Length < 15 || trimmed.Length > 16)
                 return false;
 
             return true;

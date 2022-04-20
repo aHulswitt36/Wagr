@@ -1,4 +1,4 @@
-﻿@page "/Account/AddPaymentMethod"
+﻿@page "/Account/PaymentMethods/Add"
 
 <h3>Add Payment Method</h3>
 
@@ -30,7 +30,8 @@
 @*<MudTextField @bind-Value="Country" label="Country Code" Variant="Variant.Text"/>*@
 <CountrySelect @bind-Country="Country" />
 <br/>
-<MudTextField @bind-Value="PhoneNumber" label="Phone Number" Variant="Variant.Text"/>
+@*<MudTextField @bind-Value="PhoneNumber" label="Phone Number" Variant="Variant.Text"/>*@
+<PhoneInput @bind-PhoneNumber="PhoneNumber"/>
 <br/>
 <MudTextField @bind-Value="Email" label="Email" Variant="Variant.Text"/>
 <br/>
@@ -38,3 +39,16 @@
 <br/>
 
 <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="CreatePayment">Add Payment Method</MudButton>
+
+@if(WasAttemptMade)
+{
+    @if (!Successful)
+    {
+        <MudAlert Severity="Severity.Error" Variant="Variant.Filled">There was an error creating your payment method. Please try again!</MudAlert>    
+    }    
+    else
+    {
+        <MudAlert Severity="Severity.Success" Variant="Variant.Filled">Your payment method has been successfully added.  We are verifying everything and you will soon be able to make purchases!</MudAlert>
+    }
+}
+

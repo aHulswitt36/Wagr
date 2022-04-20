@@ -21,16 +21,9 @@ namespace Plutus.Components
         [Parameter]
         public EventCallback<string> CvvChanged { get; set; }
 
-        public async Task OnCvvChanged(ChangeEventArgs e)
-        {
-            _cvv = e.Value?.ToString();
-
-            await CvvChanged.InvokeAsync(_cvv);
-        }
-
         private IEnumerable<string> Validate(string cvv)
         {
-            if(string.IsNullOrEmpty(cvv.Trim()))
+            if(string.IsNullOrEmpty(cvv))
                 yield return "Please enter your Credit Card's CVV";
             if (!IsValid())
                 yield return "Please enter a valid CVV";

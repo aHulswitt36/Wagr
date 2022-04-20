@@ -25,7 +25,8 @@ namespace Plutus.Components
 
         private IEnumerable<string> Validate(CardExpiration expiration)
         {
-            //var split = expiration.Split(" / ");
+            if (expiration == null)
+                yield return "Please enter a valid date";
             
             if (!int.TryParse(expiration.Month, out var expMonth))
                 yield return "Please enter a valid date";

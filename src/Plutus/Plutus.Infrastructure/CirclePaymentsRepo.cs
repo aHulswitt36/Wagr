@@ -41,7 +41,8 @@ namespace Plutus.Infrastructure
             }
             catch (Exception)
             {
-                throw;
+                //log
+                return null;
             }
         }
 

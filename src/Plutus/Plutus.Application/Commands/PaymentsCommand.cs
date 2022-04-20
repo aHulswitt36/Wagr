@@ -41,7 +41,7 @@ namespace Plutus.Application.Commands
                 },
                 Metadata = new CircleCreatePaymentMetadata
                 {
-                    PhoneNumber = dto.PhoneNumber,
+                    PhoneNumber = "+1"+dto.PhoneNumber.Replace("(", "").Replace(")", "").Replace("-", ""),
                     Email = dto.Email,
                     SessionId = "yyyyWillFigureOutLaterzzz",
                     IpAddress = "172.22.222.1"//dto.IpAddress

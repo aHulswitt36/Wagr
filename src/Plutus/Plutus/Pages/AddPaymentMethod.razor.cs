@@ -39,6 +39,8 @@ namespace Plutus.Pages
         private string Country { get; set; }
         private string PostalCode { get; set; }
 
+        private bool WasAttemptMade { get; set; } = false;
+        private bool Successful { get; set; } = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -64,14 +66,14 @@ namespace Plutus.Pages
 
         private async Task CreatePayment()
         {
-            var encryptedData = await _jsModule.InvokeAsync<EncryptedDataDto>("encryptCardData", pgpPublicKey, CardNumber, CVV);
+            var encryptedData = await _jsModule.InvokeAsync<EncryptedDataDto>("encryptCardData", pgpPublicKey, CardNumber.Replace(" ", ""), CVV);
             var createPaymentRequest = new CreatePaymentMethodDto
             {
                 EncryptedData = encryptedData,
                 Name = Name,
                 Email = Email,
                 ExpirationMonth = Convert.ToInt32(Expiry.Month),
-                ExpirationYear = Convert.ToInt32(Expiry.Year),
+                ExpirationYear = Convert.ToInt32("20" + Expiry.Year),
                 PhoneNumber = PhoneNumber,
                 Address = new Address
                 {
@@ -84,6 +86,32 @@ namespace Plutus.Pages
                 }
             };
             var cardDetails = await _paymentsCommand.AddNewPayment(createPaymentRequest);
+            WasAttemptMade = true;
+            if (cardDetails == null)
+                Successful = false;
+            else
+            {
+                //eventually just return to a /Account/PaymentMethods page
+                Successful = true;
+                ClearAllFields();
+            }
+
+        }
+
+        private void ClearAllFields()
+        {
+            CardNumber = "";
+            Name = "";
+            Email = "";
+            CVV = "";
+            Expiry = null;
+            PhoneNumber = "";
+            Address1 = "";
+            Address2 = "";
+            City = "";
+            District = "";
+            Country = "";
+            PostalCode = "";
         }
     }
 }
