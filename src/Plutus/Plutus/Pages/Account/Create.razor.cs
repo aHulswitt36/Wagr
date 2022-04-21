@@ -1,20 +1,19 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorState;
+using Microsoft.AspNetCore.Components;
 using Plutus.Domain.Interfaces;
 using Plutus.Domain.Models.DTO;
 using Plutus.Domain.Models.Entities;
+using Plutus.Features.Account;
 
-namespace Plutus.Pages
+namespace Plutus.Pages.Account
 {
-    public partial class CreateAccount : ComponentBase
+    public partial class Create : BlazorStateComponent
     {
         [Inject]
         private NavigationManager _navigationManager { get; set; }
         [Inject]
         private ICircleAccountsRepo _circleAccountsRepo { get; set; }
 
-        [Inject]
-        private Account Account { get; set; }
-        
         private string WalletName { get; set; }
         private string Email { get; set; }
         private string Password { get; set; }
@@ -24,7 +23,7 @@ namespace Plutus.Pages
         {
             var newAccount = (await _circleAccountsRepo.CreateAccount(WalletName)).Data;
 
-            Account = new Account()
+            await Mediator.Send(new AccountState.CreateAccountAction
             {
                 Email = Email,
                 Password = Password,
@@ -34,8 +33,8 @@ namespace Plutus.Pages
                     Type = newAccount.Type,
                     Description = newAccount.Description,
                     Balances = MapWalletBalances(newAccount.Balances)
-                }                
-            };
+                }
+            });
             _accountCreated = true;
         }
 
@@ -44,7 +43,7 @@ namespace Plutus.Pages
             _navigationManager.NavigateTo("/Account/AddPaymentMethod");
         }
 
-        private List<Balance> MapWalletBalances(List<Domain.Models.Responses.CircleAccountBalance> balances)
+        private static List<Balance> MapWalletBalances(List<Domain.Models.Responses.CircleAccountBalance> balances)
         {
             return (from balance in balances
                     let balanceDto = new Balance
@@ -54,6 +53,5 @@ namespace Plutus.Pages
                     }
                     select balanceDto).ToList();
         }
-
     }
 }

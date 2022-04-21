@@ -9,7 +9,7 @@ using Plutus.Domain.Models.Responses;
 using Plutus.Extensions;
 using Plutus.ViewModel;
 
-namespace Plutus.Pages
+namespace Plutus.Pages.Account.PaymentMethods
 {
     public partial class AddPaymentMethod : ComponentBase, IAsyncDisposable
     {
@@ -20,7 +20,7 @@ namespace Plutus.Pages
         [Inject]
         private IJSRuntime _jsRuntime { get; set; }
         [Inject]
-        private Account _account { get; set; }
+        private Plutus.Domain.Models.Entities.Account _account { get; set; }
 
         private IJSObjectReference _jsModule;
 

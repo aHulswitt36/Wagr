@@ -1,4 +1,5 @@
 ﻿@page "/Account/Create"
+@inherits BlazorStateComponent
 
 <NavLink class="nav-link" href="">
     <span class="oi oi-arrow-left" aria-hidden="true"></span> Home
@@ -15,7 +16,7 @@
     <button id="Login" @onclick="OnClick_CreateAccount">CreateAccount</button>
 }
 
-@if(_accountCreated)
+@*@if(_accountCreated)
 {
 
     <h5>Wallet ID: @Account.Wallet.WalletId</h5>
@@ -33,4 +34,4 @@
 
     <button onclick="FundWallet">Fund wallet</button>
 }
-
+*@

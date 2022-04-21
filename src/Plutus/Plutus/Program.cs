@@ -11,6 +11,8 @@ using Plutus.Domain.Settings;
 using Plutus.Infrastructure;
 using System.Net.Http.Headers;
 using MudBlazor.Services;
+using BlazorState;
+using System.Reflection;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -24,14 +26,15 @@ var countries = new List<Country>();
 builder.Configuration.GetSection("Countries").Bind(countries);
 builder.Services.AddSingleton(countries);
 
-//Temporary
-builder.Services.AddSingleton(new Account());
-
 builder.Services.AddScoped(sp =>
     new HttpClient
     {
         BaseAddress = new Uri(settings.CircleBaseUrl)
     }
+);
+
+builder.Services.AddBlazorState(
+    (aOptions) => aOptions.Assemblies = new Assembly[] { typeof(Program).GetTypeInfo().Assembly }
 );
 
 builder.Services.AddTransient<IPaymentsCommand, PaymentsCommand>();

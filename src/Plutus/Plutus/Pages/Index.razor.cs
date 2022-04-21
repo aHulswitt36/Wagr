@@ -1,31 +1,19 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorState;
+using Microsoft.AspNetCore.Components;
 using Plutus.Domain.Interfaces;
 using Plutus.Domain.Models.DTO;
-using Plutus.Domain.Models.Entities;
+using Models = Plutus.Domain.Models.Entities;
 using System.Linq;
 
 namespace Plutus.Pages
 {
-    public partial class Index : ComponentBase
+    public partial class Index : BlazorStateComponent
     {
         [Inject]
         private NavigationManager _navigationManager { get; set; }
 
         [Inject]
-        private Account Account { get; set; }
-
-        protected override void OnInitialized()
-        {
-            Account.OnChange += OnChange;
-        }
-
-        public void OnChange()
-        {
-            InvokeAsync(() =>
-            {
-                StateHasChanged();
-            });
-        }
+        private Models.Account Account { get; set; }
 
         public async Task NavigateToCreateAccount()
         {            
