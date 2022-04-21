@@ -1,16 +1,11 @@
-﻿<MudNavMenu>
+﻿@inherits BlazorStateComponent
+
+<MudNavMenu>
     <MudNavLink Href="/" Match="NavLinkMatch.All">Home</MudNavLink>
-    <MudNavGroup Title="Account" Expanded="true">
-        <MudNavLink Href="/Account/PaymentMethods"  Match="NavLinkMatch.Prefix">Payment Methods</MudNavLink>
-    </MudNavGroup>
-</MudNavMenu>
-@code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
+    @if (!string.IsNullOrEmpty(accountState.Account.Email))
     {
-        collapseNavMenu = !collapseNavMenu;
+        <MudNavGroup Title="Account" Expanded="true" >
+            <MudNavLink Href="/Account/PaymentMethods"  Match="NavLinkMatch.Prefix">Payment Methods</MudNavLink>
+        </MudNavGroup>
     }
-}
+</MudNavMenu>
