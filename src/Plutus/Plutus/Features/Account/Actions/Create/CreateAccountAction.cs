@@ -8,7 +8,6 @@ namespace Plutus.Features.Account
         public class CreateAccountAction : IAction
         {
             public string Email { get; set; }
-            public string Password { get; set; }
             public Wallet Wallet { get; set; }
 
         }

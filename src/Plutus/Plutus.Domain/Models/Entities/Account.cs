@@ -9,7 +9,7 @@ namespace Plutus.Domain.Models.Entities
     public class Account
     {
         private string _email;
-        private string _password;
+        //private string _password;
         private Wallet _wallet;
         
         public string Email
@@ -21,15 +21,15 @@ namespace Plutus.Domain.Models.Entities
                 NotifyDataChanged();
             }
         }
-        public string Password
-        {
-            get => _password;
-            set
-            {
-                _password = value;
-                NotifyDataChanged();
-            }
-        }
+        //public string Password
+        //{
+        //    get => _password;
+        //    set
+        //    {
+        //        _password = value;
+        //        NotifyDataChanged();
+        //    }
+        //}
 
         public Wallet Wallet
         {

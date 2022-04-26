@@ -3,16 +3,16 @@
 
 <PageTitle>Plutus</PageTitle>
 
-@if (string.IsNullOrEmpty(Account.Email))
+@if (string.IsNullOrEmpty(Account.Account.Email))
 {
     <h1>Welcome to the new beginning</h1>
 }
 else
 {
-    <h1>Welcome to your new beginning @Account.Email</h1>
-    <h2>Your wallet Id is: @Account.Wallet.WalletId</h2>
+    <h1>Welcome to your new beginning @Account.Account.Email</h1>
+    <h2>Your wallet Id is: @Account.Account.Wallet.WalletId</h2>
     <h3>Here are you balances</h3>
-    @foreach(var balance in Account.Wallet.Balances)
+    @foreach(var balance in Account.Account.Wallet.Balances)
     {
         <h6>Amount: @balance.Amount</h6>
         <h6>Currency: @balance.Currency</h6>

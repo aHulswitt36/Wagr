@@ -17,7 +17,6 @@ namespace Plutus.Features.Account
                 var account = new models.Account
                 {
                     Email = aAction.Email,
-                    Password = aAction.Password,
                     Wallet = aAction.Wallet
                 };
                 AccountState.Account = account;

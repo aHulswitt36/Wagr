@@ -4,17 +4,17 @@
 <NavLink class="nav-link" href="">
     <span class="oi oi-arrow-left" aria-hidden="true"></span> Home
 </NavLink>
-<h3>CreateAccount</h3>
+<h3>Create Account</h3>
 
-@if (!_accountCreated)
-{
-    <h5>Wallet Name:</h5> <input @bind="WalletName" type="text"/>
-    <h5>Email:</h5> <input @bind="Email" type="email"/>
-    <h5>Password:</h5> <input @bind="Password" type="password"/>
-    <br />
+<MudTextField @bind-Value="WalletName" InputType="InputType.Text" Placeholder="Wallet Name"/>
+
+<MudTextField @bind-Value="Email" InputType="InputType.Email" Placeholder="Email" />
+
+<MudTextField @bind-Value="Password" InputType="InputType.Password" Placeholder="Password" />
+<br />
     
-    <button id="Login" @onclick="OnClick_CreateAccount">CreateAccount</button>
-}
+<MudButton id="Login" Variant="Variant.Filled" Color="Color.Primary" OnClick="OnClick_CreateAccount">Create Account</MudButton>
+
 
 @*@if(_accountCreated)
 {

@@ -26,7 +26,6 @@ namespace Plutus.Pages.Account
             await Mediator.Send(new AccountState.CreateAccountAction
             {
                 Email = Email,
-                Password = Password,
                 Wallet = new Wallet
                 {
                     WalletId = newAccount.WalletId,

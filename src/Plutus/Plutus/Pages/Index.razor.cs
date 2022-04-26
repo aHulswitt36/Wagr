@@ -4,6 +4,7 @@ using Plutus.Domain.Interfaces;
 using Plutus.Domain.Models.DTO;
 using Models = Plutus.Domain.Models.Entities;
 using System.Linq;
+using Plutus.Features.Account;
 
 namespace Plutus.Pages
 {
@@ -12,8 +13,7 @@ namespace Plutus.Pages
         [Inject]
         private NavigationManager _navigationManager { get; set; }
 
-        [Inject]
-        private Models.Account Account { get; set; }
+        private AccountState Account => GetState<AccountState>();
 
         public async Task NavigateToCreateAccount()
         {            
