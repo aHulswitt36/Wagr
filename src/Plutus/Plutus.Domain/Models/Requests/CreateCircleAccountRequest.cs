@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Plutus.Domain.Models.Requests
 {
-    public class CreateCircleAccountRequest
+    public class CreateCircleAccountRequest : BaseCircleRequest
     {
-        [JsonProperty("idempotencyKey")]
-        public Guid IdempotencyKey { get; set; }
         [JsonProperty("description")]
         public string? Description { get; set; }
 

@@ -1,33 +1,23 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorState;
+using Microsoft.AspNetCore.Components;
 using Plutus.Domain.Interfaces;
 using Plutus.Domain.Models.DTO;
+using Models = Plutus.Domain.Models.Entities;
 using System.Linq;
+using Plutus.Features.Account;
 
 namespace Plutus.Pages
 {
-    public partial class Index : ComponentBase
+    public partial class Index : BlazorStateComponent
     {
         [Inject]
         private NavigationManager _navigationManager { get; set; }
 
-        [Inject]
-        private ICircleAccountsRepo _circleAccountsRepo { get; set; }
+        private AccountState Account => GetState<AccountState>();
 
-        private bool _accountCreated { get; set; }
-        private CircleAccountDto account { get; set; }
-
-        public async Task CreateAccount()
-        {
-            var newAccount = (await _circleAccountsRepo.CreateAccount()).Data;
-            account = new CircleAccountDto
-            {
-                WalletId = newAccount.WalletId,
-                Type = newAccount.Type,
-                Description = newAccount.Description,
-                Balances = MapWalletBalances(newAccount.Balances)
-            };
-            _accountCreated = true;
-            //_navigationManager.NavigateTo("/Account/Create");
+        public async Task NavigateToCreateAccount()
+        {            
+            _navigationManager.NavigateTo("/Account/Create");
         }
 
         private List<CircleBalanceDto> MapWalletBalances(List<Domain.Models.Responses.CircleAccountBalance> balances)

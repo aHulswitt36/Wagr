@@ -1,20 +1,22 @@
 ﻿@page "/"
+@inherits BlazorStateComponent
 
 <PageTitle>Plutus</PageTitle>
 
-<h1>Welcome to the new beginning</h1>
-
-<button id="Login" @onclick="CreateAccount">CreateAccount</button>
-
-@if(_accountCreated)
+@if (string.IsNullOrEmpty(Account.Account.Email))
 {
-    <h5>Wallet ID: @account.WalletId</h5>
-    <h5>Type: @account.Type</h5>
-    <h5>Description: @account.Description</h5>
-    <h5>Balances:</h5>
-    @foreach(var balance in account.Balances)
+    <h1>Welcome to the new beginning</h1>
+}
+else
+{
+    <h1>Welcome to your new beginning @Account.Account.Email</h1>
+    <h2>Your wallet Id is: @Account.Account.Wallet.WalletId</h2>
+    <h3>Here are you balances</h3>
+    @foreach(var balance in Account.Account.Wallet.Balances)
     {
         <h6>Amount: @balance.Amount</h6>
         <h6>Currency: @balance.Currency</h6>
     }
 }
+
+<button id="Login" @onclick="NavigateToCreateAccount">Create Account</button>
