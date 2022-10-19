@@ -17,7 +17,7 @@ namespace Wagr.Pages
 
         public async Task NavigateToCreateAccount()
         {            
-            _navigationManager.NavigateTo("/Account/Create");
+            _navigationManager.NavigateTo("/Account/Login");
         }
 
         private List<CircleBalanceDto> MapWalletBalances(List<Domain.Models.Responses.CircleAccountBalance> balances)

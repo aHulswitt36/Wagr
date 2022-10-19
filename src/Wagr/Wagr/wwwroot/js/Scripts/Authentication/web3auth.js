@@ -11,7 +11,7 @@ export class web3auth {
         ticker: "HBAR",
         tickerName: "hedera"
       },
-      enableLogging: false
+      enableLogging: true
     });
     const openloginAdapter = new OpenloginAdapter({
       adapterSettings: {

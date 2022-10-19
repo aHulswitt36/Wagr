@@ -2,6 +2,7 @@ import { Web3Auth } from '@web3auth/web3auth';
 import { CHAIN_NAMESPACES } from "@web3auth/base";
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
 export class web3auth {
+    //public provider: SafeEventEmitterProvider | null;
     async connect() {
         const web3auth = new Web3Auth({
             clientId: "BLSvb-C_jNfU71XbEIgo-DAa9HgxXtDBPpQWOU_oXPhzIqBaqv-B5zi46nc82GzYG9-D6u5fph-uC4SUOXnnf74",
@@ -22,14 +23,16 @@ export class web3auth {
         });
         web3auth.configureAdapter(openloginAdapter);
         await web3auth.initModal();
-        this.provider = await web3auth.connect();
+        //this.provider =
+        await web3auth.connect();
         return true;
     }
     async disconnect() {
         throw new Error('Method not implemented.');
     }
     getProvider() {
-        return this.provider;
+        //return this.provider;
+        throw new Error("Method not implemented");
     }
 }
 //# sourceMappingURL=web3auth.js.map

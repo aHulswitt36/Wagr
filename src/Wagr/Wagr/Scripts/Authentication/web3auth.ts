@@ -6,7 +6,7 @@ import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
 
 export class web3auth implements IAuthentication {
     
-    public provider: SafeEventEmitterProvider | null;
+    //public provider: SafeEventEmitterProvider | null;
 
     public async connect(): Promise<boolean> {
         const web3auth = new Web3Auth({
@@ -32,7 +32,8 @@ export class web3auth implements IAuthentication {
 
         await web3auth.initModal();
 
-        this.provider = await web3auth.connect();
+        //this.provider =
+        await web3auth.connect();
 
         return true;
     }
@@ -41,7 +42,8 @@ export class web3auth implements IAuthentication {
     }
 
     public getProvider(): SafeEventEmitterProvider {
-        return this.provider;
+        //return this.provider;
+        throw new Error("Method not implemented");
     }
 
 }
