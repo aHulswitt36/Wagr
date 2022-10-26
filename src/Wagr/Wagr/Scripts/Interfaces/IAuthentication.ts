@@ -1,7 +1,8 @@
 ﻿import { SafeEventEmitterProvider } from '@web3auth/base';
 
 export interface IAuthentication {
-    connect(): Promise<boolean>;
+    init(): Promise<void>;
+    connect(): Promise<void>;
     disconnect(): Promise<boolean>;
     getProvider(): SafeEventEmitterProvider;
 }

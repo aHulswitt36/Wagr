@@ -1,5 +1,5 @@
-import { v as Buffer } from './base.esm-8d0d3561.js';
-import { n as naclFast } from './nacl-fast-5296a4a6.js';
+import { B as Buffer } from './base.esm-29bcd2f1.js';
+import { n as naclFast } from './nacl-fast-06372371.js';
 
 const l = naclFast.lowlevel;
 function getED25519Key(privateKey) {

@@ -1,5 +1,8 @@
 import {web3auth} from "../../../Scripts/Authentication/web3auth.js";
+const auth = new web3auth();
 export async function CreateWeb3AuthConnection() {
-  var auth = new web3auth();
-  return await auth.connect();
+  await auth.connect();
+}
+export async function Init() {
+  await auth.init();
 }

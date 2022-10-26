@@ -10,7 +10,7 @@
     "lib": [ "ES2018", "DOM" ],
     "rootDir": ".",
     "moduleResolution": "node",
-    "types": [ "@types/jest", "@types/node" ]    
+    "types": [ "@types/jest", "@types/node"]
   },
   "include": [ "Shared/**/*", "Pages/**/*", "Scripts/**/*" ]
 }

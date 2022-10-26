@@ -1,5 +1,9 @@
+var global$1 = (typeof global !== "undefined" ? global :
+  typeof self !== "undefined" ? self :
+  typeof window !== "undefined" ? window : {});
+
 /*! OpenPGP.js v5.5.0 - 2022-08-31 - this is LGPL licensed code, see LICENSE/our website https://openpgpjs.org/ for more information. */
-const e = typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : {}, t = Symbol("doneWritingPromise"), r = Symbol("doneWritingResolve"), i = Symbol("doneWritingReject"), n = Symbol("readingIndex");
+const e = typeof window != "undefined" ? window : typeof global$1 != "undefined" ? global$1 : typeof self != "undefined" ? self : {}, t = Symbol("doneWritingPromise"), r = Symbol("doneWritingResolve"), i = Symbol("doneWritingReject"), n = Symbol("readingIndex");
 class a extends Array {
   constructor() {
     super(), this[t] = new Promise((e2, t2) => {
@@ -3268,7 +3272,7 @@ Je.equal = function(e2, t2, r2) {
   if (e2 != t2)
     throw Error(r2 || "Assertion failed: " + e2 + " != " + t2);
 };
-var et = e !== void 0 ? e : typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : {};
+var et = e !== void 0 ? e : typeof window != "undefined" ? window : typeof global$1 != "undefined" ? global$1 : typeof self != "undefined" ? self : {};
 function tt(e2, t2) {
   return e2(t2 = {exports: {}}, t2.exports), t2.exports;
 }
@@ -9635,7 +9639,7 @@ async function Uc(e2, t2, r2 = "utf8") {
 const Tc = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? Symbol : (e2) => `Symbol(${e2})`;
 function zc() {
 }
-const qc = typeof self != "undefined" ? self : typeof window != "undefined" ? window : typeof global != "undefined" ? global : void 0;
+const qc = typeof self != "undefined" ? self : typeof window != "undefined" ? window : typeof global$1 != "undefined" ? global$1 : void 0;
 function Oc(e2) {
   return typeof e2 == "object" && e2 !== null || typeof e2 == "function";
 }

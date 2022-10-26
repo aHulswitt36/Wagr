@@ -1,4 +1,4 @@
-import { p as createCommonjsModule, af as commonjsRequire, q as require$$0 } from './base.esm-8d0d3561.js';
+import { n as createCommonjsModule, af as commonjsRequire, o as require$$0 } from './base.esm-29bcd2f1.js';
 
 var naclFast = createCommonjsModule(function (module) {
 (function(nacl) {

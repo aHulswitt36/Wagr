@@ -24,4 +24,13 @@
     <ProjectReference Include="..\Wagr.Infrastructure\Wagr.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\js\Pages\Account\Login\" />
+  </ItemGroup>
+	
+	<Target Name="PreBuild" BeforeTargets="AfterBuild">
+		<Exec Command="npm run build" />
+	</Target>
+
+
 </Project>

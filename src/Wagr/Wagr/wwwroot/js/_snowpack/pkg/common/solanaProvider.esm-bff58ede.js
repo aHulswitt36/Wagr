@@ -1,6 +1,6 @@
-import { $ as safeBuffer, p as createCommonjsModule, a6 as nodeCrypto, s as commonjsGlobal, v as Buffer, O as buffer, a7 as classCallCheck, a8 as createClass, a9 as inherits, aa as possibleConstructorReturn, M as getPrototypeOf, r as regenerator, ab as asyncToGenerator, ac as _typeof_1, _ as _inherits, a as _getPrototypeOf, b as _possibleConstructorReturn, c as _classCallCheck, j as _createClass, X as createAsyncMiddleware, k as _asyncToGenerator, ad as isHexStrict, i as WalletInitializationError, V as dist, ae as mergeMiddleware, K as JRPCEngine, C as CHAIN_NAMESPACES, d as _defineProperty } from './base.esm-8d0d3561.js';
-import { b as bn, p as providerFromEngine, B as BaseProvider, c as createFetchMiddleware } from './baseProvider.esm-65309567.js';
-import { n as naclFast } from './nacl-fast-5296a4a6.js';
+import { Z as safeBuffer, n as createCommonjsModule, a6 as nodeCrypto, p as commonjsGlobal, B as Buffer, N as buffer_1, a7 as classCallCheck, a8 as createClass, a9 as inherits, aa as possibleConstructorReturn, L as getPrototypeOf, r as regenerator, ab as asyncToGenerator, ac as _typeof_1, a as _inherits, b as _getPrototypeOf, c as _possibleConstructorReturn, d as _classCallCheck, i as _createClass, a2 as createAsyncMiddleware, j as _asyncToGenerator, ad as isHexStrict, g as WalletInitializationError, a1 as dist, ae as mergeMiddleware, J as JRPCEngine, C as CHAIN_NAMESPACES, _ as _defineProperty } from './base.esm-29bcd2f1.js';
+import { b as bn, p as providerFromEngine, B as BaseProvider, c as createFetchMiddleware } from './openloginAdapter.esm-87ac5d1b.js';
+import { n as naclFast } from './nacl-fast-06372371.js';
 
 // base-x encoding / decoding
 // Copyright (c) 2018 base-x contributors
@@ -1378,6 +1378,129 @@ Object.defineProperties(utils$1, {
     },
 });
 
+// base-x encoding / decoding
+// Copyright (c) 2018 base-x contributors
+// Copyright (c) 2014-2018 The Bitcoin Core developers (base58.cpp)
+// Distributed under the MIT software license, see the accompanying
+// file LICENSE or http://www.opensource.org/licenses/mit-license.php.
+// @ts-ignore
+var _Buffer$1 = safeBuffer.Buffer;
+function base$1 (ALPHABET) {
+  if (ALPHABET.length >= 255) { throw new TypeError('Alphabet too long') }
+  var BASE_MAP = new Uint8Array(256);
+  for (var j = 0; j < BASE_MAP.length; j++) {
+    BASE_MAP[j] = 255;
+  }
+  for (var i = 0; i < ALPHABET.length; i++) {
+    var x = ALPHABET.charAt(i);
+    var xc = x.charCodeAt(0);
+    if (BASE_MAP[xc] !== 255) { throw new TypeError(x + ' is ambiguous') }
+    BASE_MAP[xc] = i;
+  }
+  var BASE = ALPHABET.length;
+  var LEADER = ALPHABET.charAt(0);
+  var FACTOR = Math.log(BASE) / Math.log(256); // log(BASE) / log(256), rounded up
+  var iFACTOR = Math.log(256) / Math.log(BASE); // log(256) / log(BASE), rounded up
+  function encode (source) {
+    if (Array.isArray(source) || source instanceof Uint8Array) { source = _Buffer$1.from(source); }
+    if (!_Buffer$1.isBuffer(source)) { throw new TypeError('Expected Buffer') }
+    if (source.length === 0) { return '' }
+        // Skip & count leading zeroes.
+    var zeroes = 0;
+    var length = 0;
+    var pbegin = 0;
+    var pend = source.length;
+    while (pbegin !== pend && source[pbegin] === 0) {
+      pbegin++;
+      zeroes++;
+    }
+        // Allocate enough space in big-endian base58 representation.
+    var size = ((pend - pbegin) * iFACTOR + 1) >>> 0;
+    var b58 = new Uint8Array(size);
+        // Process the bytes.
+    while (pbegin !== pend) {
+      var carry = source[pbegin];
+            // Apply "b58 = b58 * 256 + ch".
+      var i = 0;
+      for (var it1 = size - 1; (carry !== 0 || i < length) && (it1 !== -1); it1--, i++) {
+        carry += (256 * b58[it1]) >>> 0;
+        b58[it1] = (carry % BASE) >>> 0;
+        carry = (carry / BASE) >>> 0;
+      }
+      if (carry !== 0) { throw new Error('Non-zero carry') }
+      length = i;
+      pbegin++;
+    }
+        // Skip leading zeroes in base58 result.
+    var it2 = size - length;
+    while (it2 !== size && b58[it2] === 0) {
+      it2++;
+    }
+        // Translate the result into a string.
+    var str = LEADER.repeat(zeroes);
+    for (; it2 < size; ++it2) { str += ALPHABET.charAt(b58[it2]); }
+    return str
+  }
+  function decodeUnsafe (source) {
+    if (typeof source !== 'string') { throw new TypeError('Expected String') }
+    if (source.length === 0) { return _Buffer$1.alloc(0) }
+    var psz = 0;
+        // Skip and count leading '1's.
+    var zeroes = 0;
+    var length = 0;
+    while (source[psz] === LEADER) {
+      zeroes++;
+      psz++;
+    }
+        // Allocate enough space in big-endian base256 representation.
+    var size = (((source.length - psz) * FACTOR) + 1) >>> 0; // log(58) / log(256), rounded up.
+    var b256 = new Uint8Array(size);
+        // Process the characters.
+    while (source[psz]) {
+            // Decode character
+      var carry = BASE_MAP[source.charCodeAt(psz)];
+            // Invalid character
+      if (carry === 255) { return }
+      var i = 0;
+      for (var it3 = size - 1; (carry !== 0 || i < length) && (it3 !== -1); it3--, i++) {
+        carry += (BASE * b256[it3]) >>> 0;
+        b256[it3] = (carry % 256) >>> 0;
+        carry = (carry / 256) >>> 0;
+      }
+      if (carry !== 0) { throw new Error('Non-zero carry') }
+      length = i;
+      psz++;
+    }
+        // Skip leading zeroes in b256.
+    var it4 = size - length;
+    while (it4 !== size && b256[it4] === 0) {
+      it4++;
+    }
+    var vch = _Buffer$1.allocUnsafe(zeroes + (size - it4));
+    vch.fill(0x00, 0, zeroes);
+    var j = zeroes;
+    while (it4 !== size) {
+      vch[j++] = b256[it4++];
+    }
+    return vch
+  }
+  function decode (string) {
+    var buffer = decodeUnsafe(string);
+    if (buffer) { return buffer }
+    throw new Error('Non-base' + BASE + ' character')
+  }
+  return {
+    encode: encode,
+    decodeUnsafe: decodeUnsafe,
+    decode: decode
+  }
+}
+var src$1 = base$1;
+
+var ALPHABET$1 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+
+var bs58$1 = src$1(ALPHABET$1);
+
 var sha256 = createCommonjsModule(function (module, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sha256 = void 0;
@@ -1489,6 +1612,129 @@ class SHA256 extends _sha2.SHA2 {
  */
 exports.sha256 = (0, utils.wrapConstructor)(() => new SHA256());
 });
+
+// base-x encoding / decoding
+// Copyright (c) 2018 base-x contributors
+// Copyright (c) 2014-2018 The Bitcoin Core developers (base58.cpp)
+// Distributed under the MIT software license, see the accompanying
+// file LICENSE or http://www.opensource.org/licenses/mit-license.php.
+// @ts-ignore
+var _Buffer$2 = safeBuffer.Buffer;
+function base$2 (ALPHABET) {
+  if (ALPHABET.length >= 255) { throw new TypeError('Alphabet too long') }
+  var BASE_MAP = new Uint8Array(256);
+  for (var j = 0; j < BASE_MAP.length; j++) {
+    BASE_MAP[j] = 255;
+  }
+  for (var i = 0; i < ALPHABET.length; i++) {
+    var x = ALPHABET.charAt(i);
+    var xc = x.charCodeAt(0);
+    if (BASE_MAP[xc] !== 255) { throw new TypeError(x + ' is ambiguous') }
+    BASE_MAP[xc] = i;
+  }
+  var BASE = ALPHABET.length;
+  var LEADER = ALPHABET.charAt(0);
+  var FACTOR = Math.log(BASE) / Math.log(256); // log(BASE) / log(256), rounded up
+  var iFACTOR = Math.log(256) / Math.log(BASE); // log(256) / log(BASE), rounded up
+  function encode (source) {
+    if (Array.isArray(source) || source instanceof Uint8Array) { source = _Buffer$2.from(source); }
+    if (!_Buffer$2.isBuffer(source)) { throw new TypeError('Expected Buffer') }
+    if (source.length === 0) { return '' }
+        // Skip & count leading zeroes.
+    var zeroes = 0;
+    var length = 0;
+    var pbegin = 0;
+    var pend = source.length;
+    while (pbegin !== pend && source[pbegin] === 0) {
+      pbegin++;
+      zeroes++;
+    }
+        // Allocate enough space in big-endian base58 representation.
+    var size = ((pend - pbegin) * iFACTOR + 1) >>> 0;
+    var b58 = new Uint8Array(size);
+        // Process the bytes.
+    while (pbegin !== pend) {
+      var carry = source[pbegin];
+            // Apply "b58 = b58 * 256 + ch".
+      var i = 0;
+      for (var it1 = size - 1; (carry !== 0 || i < length) && (it1 !== -1); it1--, i++) {
+        carry += (256 * b58[it1]) >>> 0;
+        b58[it1] = (carry % BASE) >>> 0;
+        carry = (carry / BASE) >>> 0;
+      }
+      if (carry !== 0) { throw new Error('Non-zero carry') }
+      length = i;
+      pbegin++;
+    }
+        // Skip leading zeroes in base58 result.
+    var it2 = size - length;
+    while (it2 !== size && b58[it2] === 0) {
+      it2++;
+    }
+        // Translate the result into a string.
+    var str = LEADER.repeat(zeroes);
+    for (; it2 < size; ++it2) { str += ALPHABET.charAt(b58[it2]); }
+    return str
+  }
+  function decodeUnsafe (source) {
+    if (typeof source !== 'string') { throw new TypeError('Expected String') }
+    if (source.length === 0) { return _Buffer$2.alloc(0) }
+    var psz = 0;
+        // Skip and count leading '1's.
+    var zeroes = 0;
+    var length = 0;
+    while (source[psz] === LEADER) {
+      zeroes++;
+      psz++;
+    }
+        // Allocate enough space in big-endian base256 representation.
+    var size = (((source.length - psz) * FACTOR) + 1) >>> 0; // log(58) / log(256), rounded up.
+    var b256 = new Uint8Array(size);
+        // Process the characters.
+    while (source[psz]) {
+            // Decode character
+      var carry = BASE_MAP[source.charCodeAt(psz)];
+            // Invalid character
+      if (carry === 255) { return }
+      var i = 0;
+      for (var it3 = size - 1; (carry !== 0 || i < length) && (it3 !== -1); it3--, i++) {
+        carry += (BASE * b256[it3]) >>> 0;
+        b256[it3] = (carry % 256) >>> 0;
+        carry = (carry / 256) >>> 0;
+      }
+      if (carry !== 0) { throw new Error('Non-zero carry') }
+      length = i;
+      psz++;
+    }
+        // Skip leading zeroes in b256.
+    var it4 = size - length;
+    while (it4 !== size && b256[it4] === 0) {
+      it4++;
+    }
+    var vch = _Buffer$2.allocUnsafe(zeroes + (size - it4));
+    vch.fill(0x00, 0, zeroes);
+    var j = zeroes;
+    while (it4 !== size) {
+      vch[j++] = b256[it4++];
+    }
+    return vch
+  }
+  function decode (string) {
+    var buffer = decodeUnsafe(string);
+    if (buffer) { return buffer }
+    throw new Error('Non-base' + BASE + ' character')
+  }
+  return {
+    encode: encode,
+    decodeUnsafe: decodeUnsafe,
+    decode: decode
+  }
+}
+var src$2 = base$2;
+
+var ALPHABET$2 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+
+var bs58$2 = src$2(ALPHABET$2);
 
 // This is free and unencumbered software released into the public domain.
 // See LICENSE.md for more information.
@@ -2166,7 +2412,7 @@ var __importDefault = (commonjsGlobal && commonjsGlobal.__importDefault) || func
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deserializeUnchecked = exports.deserialize = exports.serialize = exports.BinaryReader = exports.BinaryWriter = exports.BorshError = exports.baseDecode = exports.baseEncode = void 0;
 const bn_js_1 = __importDefault(bn);
-const bs58_1 = __importDefault(bs58);
+const bs58_1 = __importDefault(bs58$2);
 // TODO: Make sure this polyfill not included when not required
 const encoding$1 = __importStar(encoding);
 const ResolvedTextDecoder = typeof TextDecoder !== "function" ? encoding$1.TextDecoder : TextDecoder;
@@ -2595,7 +2841,7 @@ exports.checkUint8Array = checkUint8Array;
  * @ignore */
 function uint8ArrayToBuffer(b) {
     checkUint8Array(b);
-    return buffer.Buffer.from(b.buffer, b.byteOffset, b.length);
+    return buffer_1.Buffer.from(b.buffer, b.byteOffset, b.length);
 }
 exports.uint8ArrayToBuffer = uint8ArrayToBuffer;
 /**
@@ -4593,14 +4839,14 @@ class CString extends Layout {
         if ('string' !== typeof src) {
             src = String(src);
         }
-        const srcb = buffer.Buffer.from(src, 'utf8');
+        const srcb = buffer_1.Buffer.from(src, 'utf8');
         const span = srcb.length;
         if ((offset + span) > b.length) {
             throw new RangeError('encoding overruns Buffer');
         }
-        const buffer$1 = uint8ArrayToBuffer(b);
-        srcb.copy(buffer$1, offset);
-        buffer$1[offset + span] = 0;
+        const buffer = uint8ArrayToBuffer(b);
+        srcb.copy(buffer, offset);
+        buffer[offset + span] = 0;
         return span + 1;
     }
 }
@@ -4669,7 +4915,7 @@ class UTF8 extends Layout {
         if ('string' !== typeof src) {
             src = String(src);
         }
-        const srcb = buffer.Buffer.from(src, 'utf8');
+        const srcb = buffer_1.Buffer.from(src, 'utf8');
         const span = srcb.length;
         if ((0 <= this.maxSpan)
             && (this.maxSpan < span)) {
@@ -8573,7 +8819,7 @@ class PublicKey extends Struct$1 {
     } else {
       if (typeof value === 'string') {
         // assume base 58 encoding by default
-        const decoded = bs58.decode(value);
+        const decoded = bs58$1.decode(value);
 
         if (decoded.length != PUBLIC_KEY_LENGTH) {
           throw new Error(`Invalid public key input`);
@@ -8600,7 +8846,8 @@ class PublicKey extends Struct$1 {
     return new PublicKey(key.toBuffer());
   }
   /**
-   * Default public key value. (All zeros)
+   * Default public key value. The base58-encoded string representation is all ones (as seen below)
+   * The underlying BN number is 32 bytes that are all zeros
    */
 
 
@@ -8616,7 +8863,7 @@ class PublicKey extends Struct$1 {
 
 
   toBase58() {
-    return bs58.encode(this.toBytes());
+    return bs58$1.encode(this.toBytes());
   }
 
   toJSON() {
@@ -9114,7 +9361,7 @@ class Message {
     return this.instructions.map(ix => ({
       programIdIndex: ix.programIdIndex,
       accountKeyIndexes: ix.accounts,
-      data: bs58.decode(ix.data)
+      data: bs58$1.decode(ix.data)
     }));
   }
 
@@ -9133,7 +9380,7 @@ class Message {
     const instructions = accountKeys.compileInstructions(args.instructions).map(ix => ({
       programIdIndex: ix.programIdIndex,
       accounts: ix.accountKeyIndexes,
-      data: bs58.encode(ix.data)
+      data: bs58$1.encode(ix.data)
     }));
     return new Message({
       header,
@@ -9182,7 +9429,7 @@ class Message {
         accounts,
         programIdIndex
       } = instruction;
-      const data = Array.from(bs58.decode(instruction.data));
+      const data = Array.from(bs58$1.decode(instruction.data));
       let keyIndicesCount = [];
       encodeLength(keyIndicesCount, accounts.length);
       let dataCount = [];
@@ -9213,7 +9460,7 @@ class Message {
       numReadonlyUnsignedAccounts: Buffer.from([this.header.numReadonlyUnsignedAccounts]),
       keyCount: Buffer.from(keyCount),
       keys: this.accountKeys.map(key => toBuffer(key.toBytes())),
-      recentBlockhash: bs58.decode(this.recentBlockhash)
+      recentBlockhash: bs58$1.decode(this.recentBlockhash)
     };
     let signData = Buffer.alloc(2048);
     const length = signDataLayout.encode(transaction, signData);
@@ -9257,7 +9504,7 @@ class Message {
       byteArray = byteArray.slice(accountCount);
       const dataLength = decodeLength(byteArray);
       const dataSlice = byteArray.slice(0, dataLength);
-      const data = bs58.encode(Buffer.from(dataSlice));
+      const data = bs58$1.encode(Buffer.from(dataSlice));
       byteArray = byteArray.slice(dataLength);
       instructions.push({
         programIdIndex,
@@ -9272,7 +9519,7 @@ class Message {
         numReadonlySignedAccounts,
         numReadonlyUnsignedAccounts
       },
-      recentBlockhash: bs58.encode(Buffer.from(recentBlockhash)),
+      recentBlockhash: bs58$1.encode(Buffer.from(recentBlockhash)),
       accountKeys,
       instructions
     };
@@ -9439,7 +9686,7 @@ class MessageV0 {
       header: this.header,
       staticAccountKeysLength: new Uint8Array(encodedStaticAccountKeysLength),
       staticAccountKeys: this.staticAccountKeys.map(key => key.toBytes()),
-      recentBlockhash: bs58.decode(this.recentBlockhash),
+      recentBlockhash: bs58$1.decode(this.recentBlockhash),
       instructionsLength: new Uint8Array(encodedInstructionsLength),
       serializedInstructions,
       addressTableLookupsLength: new Uint8Array(encodedAddressTableLookupsLength),
@@ -9511,7 +9758,7 @@ class MessageV0 {
       staticAccountKeys.push(new PublicKey(byteArray.splice(0, PUBLIC_KEY_LENGTH)));
     }
 
-    const recentBlockhash = bs58.encode(byteArray.splice(0, PUBLIC_KEY_LENGTH));
+    const recentBlockhash = bs58$1.encode(byteArray.splice(0, PUBLIC_KEY_LENGTH));
     const instructionCount = decodeLength(byteArray);
     const compiledInstructions = [];
 
@@ -9910,7 +10157,7 @@ class Transaction {
       return {
         programIdIndex: accountKeys.indexOf(programId.toString()),
         accounts: instruction.keys.map(meta => accountKeys.indexOf(meta.pubkey.toString())),
-        data: bs58.encode(data)
+        data: bs58$1.encode(data)
       };
     });
     compiledInstructions.forEach(instruction => {
@@ -10240,7 +10487,7 @@ class Transaction {
     for (let i = 0; i < signatureCount; i++) {
       const signature = byteArray.slice(0, SIGNATURE_LENGTH_IN_BYTES);
       byteArray = byteArray.slice(SIGNATURE_LENGTH_IN_BYTES);
-      signatures.push(bs58.encode(Buffer.from(signature)));
+      signatures.push(bs58$1.encode(Buffer.from(signature)));
     }
 
     return Transaction.populate(Message.from(byteArray), signatures);
@@ -10260,7 +10507,7 @@ class Transaction {
 
     signatures.forEach((signature, index) => {
       const sigPubkeyPair = {
-        signature: signature == bs58.encode(DEFAULT_SIGNATURE) ? null : bs58.decode(signature),
+        signature: signature == bs58$1.encode(DEFAULT_SIGNATURE) ? null : bs58$1.decode(signature),
         publicKey: message.accountKeys[index]
       };
       transaction.signatures.push(sigPubkeyPair);
@@ -10277,7 +10524,7 @@ class Transaction {
       transaction.instructions.push(new TransactionInstruction({
         keys,
         programId: message.accountKeys[instruction.programIdIndex],
-        data: bs58.decode(instruction.data)
+        data: bs58$1.decode(instruction.data)
       }));
     });
     transaction._message = message;
@@ -10887,7 +11134,7 @@ function versionedMessageFromResponse(version, response) {
       compiledInstructions: response.instructions.map(ix => ({
         programIdIndex: ix.programIdIndex,
         accountKeyIndexes: ix.accounts,
-        data: bs58.decode(ix.data)
+        data: bs58$1.decode(ix.data)
       })),
       addressTableLookups: response.addressTableLookups
     });
@@ -12223,6 +12470,29 @@ class Connection {
    */
 
 
+  async getMultipleParsedAccounts(publicKeys, rawConfig) {
+    const {
+      commitment,
+      config
+    } = extractCommitmentFromConfig(rawConfig);
+    const keys = publicKeys.map(key => key.toBase58());
+
+    const args = this._buildArgs([keys], commitment, 'jsonParsed', config);
+
+    const unsafeRes = await this._rpcRequest('getMultipleAccounts', args);
+    const res = create(unsafeRes, jsonRpcResultAndContext(array(nullable(ParsedAccountInfoResult))));
+
+    if ('error' in res) {
+      throw new SolanaJSONRPCError(res.error, `failed to get info for accounts ${keys}`);
+    }
+
+    return res.result;
+  }
+  /**
+   * Fetch all the account info for multiple accounts specified by an array of public keys, return with context
+   */
+
+
   async getMultipleAccountsInfoAndContext(publicKeys, commitmentOrConfig) {
     const {
       commitment,
@@ -12343,7 +12613,7 @@ class Connection {
     let decodedSignature;
 
     try {
-      decodedSignature = bs58.decode(rawSignature);
+      decodedSignature = bs58$1.decode(rawSignature);
     } catch (err) {
       throw new Error('signature must be base58 encoded: ' + rawSignature);
     }
@@ -12815,7 +13085,7 @@ class Connection {
     const res = create(unsafeRes, jsonRpcResultAndContext(nullable(number())));
 
     if ('error' in res) {
-      throw new SolanaJSONRPCError(res.error, 'failed to get slot');
+      throw new SolanaJSONRPCError(res.error, 'failed to get fee for message');
     }
 
     if (res.result === null) {
@@ -13920,7 +14190,7 @@ class Connection {
 
   _wsOnClose(code) {
     this._rpcWebSocketConnected = false;
-    this._rpcWebSocketGeneration++;
+    this._rpcWebSocketGeneration = (this._rpcWebSocketGeneration + 1) % Number.MAX_SAFE_INTEGER;
 
     if (this._rpcWebSocketIdleTimeout) {
       clearTimeout(this._rpcWebSocketIdleTimeout);
@@ -15683,7 +15953,7 @@ var getSlopeHandlers = function getSlopeHandlers(injectedProvider, getProviderEn
               case 9:
                 publicKey = new PublicKey(data.publicKey);
                 signature = bs58.decode(data.signature);
-                txMessage.addSignature(publicKey, signature);
+                txMessage.addSignature(publicKey, Buffer.from(signature));
                 return _context5.abrupt("return", txMessage);
 
               case 13:
@@ -15778,7 +16048,7 @@ var getSlopeHandlers = function getSlopeHandlers(injectedProvider, getProviderEn
               case 12:
                 publicKey = new PublicKey(data.publicKey);
                 signature = bs58.decode(data.signature);
-                txMessage.addSignature(publicKey, signature);
+                txMessage.addSignature(publicKey, Buffer.from(signature));
                 _context7.next = 17;
                 return provider.request({
                   method: "solana_provider_config",
@@ -15857,7 +16127,7 @@ var getSlopeHandlers = function getSlopeHandlers(injectedProvider, getProviderEn
 
                 for (i = 0; i < length; i++) {
                   signature = bs58.decode(data.signatures[i]);
-                  allTxns[i].addSignature(publicKey, signature);
+                  allTxns[i].addSignature(publicKey, Buffer.from(signature));
                 }
 
                 return _context8.abrupt("return", allTxns);
@@ -17655,15 +17925,4 @@ var SolanaWallet = /*#__PURE__*/function () {
   return SolanaWallet;
 }();
 
-var solanaProvider_esm = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  PhantomInjectedProvider: PhantomInjectedProvider,
-  SlopeInjectedProxyProvider: SlopeInjectedProxyProvider,
-  SolanaPrivateKeyProvider: SolanaPrivateKeyProvider,
-  SolanaWallet: SolanaWallet,
-  SolflareInjectedProvider: SolflareInjectedProvider,
-  SolletInjectedProvider: SolletInjectedProvider,
-  TorusInjectedProvider: TorusInjectedProvider
-});
-
-export { PublicKey as P, TorusInjectedProvider as T, PhantomInjectedProvider as a, solanaProvider_esm as s };
+export { PhantomInjectedProvider, SlopeInjectedProxyProvider, SolanaPrivateKeyProvider, SolanaWallet, SolflareInjectedProvider, SolletInjectedProvider, TorusInjectedProvider };

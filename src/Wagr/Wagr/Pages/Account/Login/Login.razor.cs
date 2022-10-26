@@ -16,6 +16,7 @@ namespace Wagr.Pages.Account.Login
         {
             if (firstRender)
                 _jsModule = await _jsRuntime.ComponentModule<Login>();
+            await _jsModule.InvokeVoidAsync("Init");
             await base.OnAfterRenderAsync(firstRender);
         }
 
