@@ -1,4 +1,5 @@
 {
+  "compileOnSave": true,
   "compilerOptions": {
     "alwaysStrict": false,
     "noImplicitAny": false,
@@ -8,9 +9,18 @@
     "target": "ES2020",
     "module": "ESNext",
     "lib": [ "ES2018", "DOM" ],
-    "rootDir": ".",
+    "baseUrl": "./",
     "moduleResolution": "node",
-    "types": [ "@types/jest", "@types/node"]
+    "types": [ "@types/jest", "@types/node" ],
+    "paths": {
+      "crypto": [ "./node_modules/crypto-browserify" ],
+      "stream": [ "./node_modules/stream-browserify" ],
+      "assert": [ "./node_modules/assert" ],
+      "http": [ "./node_modules/stream-http" ],
+      "https": [ "./node_modules/https-browserify" ],
+      "os": [ "./node_modules/os-browserify" ],
+      "process": [ "./node_modules/process" ]
+    }
   },
   "include": [ "Shared/**/*", "Pages/**/*", "Scripts/**/*" ]
 }
