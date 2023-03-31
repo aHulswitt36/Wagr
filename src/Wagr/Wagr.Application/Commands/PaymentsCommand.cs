@@ -17,8 +17,17 @@ namespace Wagr.Application.Commands
 
         public async Task<CircleCreateCardResponse> AddNewPayment(CreatePaymentMethodDto dto)
         {
+            try
+            {
+
             var request = MapDtoToRequest(dto);
             return await _circlePaymentsRepo.CreateNewPayment(request);
+            }
+            catch (InvalidCastException e)
+            {
+
+                throw;
+            }
         }
 
         private CircleCreateCardRequest MapDtoToRequest(CreatePaymentMethodDto dto)

@@ -15,10 +15,7 @@ namespace Wagr.Pages
 
         private AccountState Account => GetState<AccountState>();
 
-        public async Task NavigateToCreateAccount()
-        {            
-            _navigationManager.NavigateTo("/Account/Create");
-        }
+        
 
         private List<CircleBalanceDto> MapWalletBalances(List<Domain.Models.Responses.CircleAccountBalance> balances)
         {

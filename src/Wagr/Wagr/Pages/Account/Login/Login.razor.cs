@@ -9,6 +9,8 @@ namespace Wagr.Pages.Account.Login
     {
         [Inject]
         private IJSRuntime _jsRuntime { get; set; }
+        [Inject]
+        private NavigationManager _navigationManager { get; set; }
 
         private IJSObjectReference _jsModule;
 
@@ -23,6 +25,11 @@ namespace Wagr.Pages.Account.Login
         {
             await _jsModule.InvokeVoidAsync("CreateWeb3AuthConnection");
 
+        }
+
+        public async Task NavigateToCreateAccount()
+        {
+            _navigationManager.NavigateTo("/Account/Create");
         }
     }
 }
