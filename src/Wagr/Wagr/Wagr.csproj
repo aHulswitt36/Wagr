@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Scripts\Authentication\web3auth.js" />
-    <None Remove="Scripts\Authentication\web3auth.js.map" />
+    <None Remove="Pages\About\" />
+    <None Remove="Pages\Wagr\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <Folder Include="Scripts\Authentication\" />
+    <Folder Include="Pages\About\" />
   </ItemGroup>
 
 </Project>
