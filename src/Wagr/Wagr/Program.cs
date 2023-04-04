@@ -29,7 +29,7 @@ builder.Services.AddSingleton(countries);
 builder.Services.AddScoped(sp =>
     new HttpClient
     {
-        BaseAddress = new Uri(settings.CircleBaseUrl)
+        BaseAddress = new Uri(settings.ApiUrl)
     }
 );
 

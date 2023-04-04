@@ -10,6 +10,6 @@ namespace Wagr.Domain.Settings
     {
         public string CircleBaseUrl { get; set; }
         public string CircleApiKey { get; set; }
-
+        public string ApiUrl { get; set; }
     }
 }

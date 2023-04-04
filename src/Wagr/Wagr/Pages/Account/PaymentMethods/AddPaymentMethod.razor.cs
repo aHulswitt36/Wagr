@@ -53,10 +53,8 @@ namespace Wagr.Pages.Account.PaymentMethods
             if (firstRender)
             {
                 _jsModule = await _jsRuntime.ComponentModule<AddPaymentMethod>();
-                //_jsModule = await _jsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/Pages/AddPaymentMethod.razor.js");
             }
         }
-
         public async ValueTask DisposeAsync()
         {
              if (_jsModule != null) 
