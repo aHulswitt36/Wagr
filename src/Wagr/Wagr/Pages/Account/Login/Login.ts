@@ -1,4 +1,4 @@
-﻿import { web3auth } from "../../../Scripts/Authentication/web3auth";
+﻿//import { web3auth } from "../../../Scripts/Authentication/web3auth";
 
 
 //export async function CreateWeb3AuthConnection() {

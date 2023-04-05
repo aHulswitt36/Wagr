@@ -17,6 +17,6 @@ namespace Wagr.ClientInfrastructure
             _httpClient = httpClient;
         }
 
-        public async Task<T> PostAsync()
+        //public async Task<T> PostAsync()
     }
 }
