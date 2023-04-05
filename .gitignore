@@ -242,3 +242,4 @@ paket-files/
 .idea/
 *.sln.iml
 /src/Plutus/Plutus/wwwroot/temp
+/src/Wagr/Wagr/wwwroot
