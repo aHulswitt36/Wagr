@@ -16,14 +16,14 @@ namespace Wagr.Pages.Account.Login
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (firstRender)
-                _jsModule = await _jsRuntime.ComponentModule<Login>();
+            //if (firstRender)
+                //_jsModule = await _jsRuntime.ComponentModule<Login>();
             await base.OnAfterRenderAsync(firstRender);
         }
 
         private async Task LoginUser()
         {
-            await _jsModule.InvokeVoidAsync("CreateWeb3AuthConnection");
+            //await _jsModule.InvokeVoidAsync("CreateWeb3AuthConnection");
 
         }
 

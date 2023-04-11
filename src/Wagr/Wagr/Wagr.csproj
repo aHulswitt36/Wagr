@@ -12,7 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Remove="Pages\Account\Login\Login.ts" />
     <TypeScriptCompile Remove="Scripts\Authentication\web3auth.ts" />
+    <TypeScriptCompile Remove="Scripts\Helpers\loglevel.d.ts" />
+    <TypeScriptCompile Remove="Scripts\Interfaces\IAuthentication.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +40,8 @@
   <ItemGroup>
     <Folder Include="Scripts\Authentication\" />
     <Folder Include="Pages\About\" />
+    <Folder Include="Scripts\Helpers\" />
+    <Folder Include="Scripts\Interfaces\" />
   </ItemGroup>
 
 </Project>
