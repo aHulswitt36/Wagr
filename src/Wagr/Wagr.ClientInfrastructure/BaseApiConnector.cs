@@ -26,7 +26,8 @@ namespace Wagr.ClientInfrastructure
             var endpointUrl = _endpointUrl + endpoint;
             var response = await _httpClient.PostAsJsonAsync(endpointUrl, request, token);
             await response.CheckForSuccessfulResponse();
-            return await response.Content.ReadFromJsonAsync<TResponse>();
+          
+            return await response.Content.ReadFromJsonAsync<TResponse>(cancellationToken: token);
         }
 
         
