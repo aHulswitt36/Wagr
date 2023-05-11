@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using Wagr.Domain.Interfaces.Connectors;
@@ -10,6 +12,16 @@ namespace Wagr.Infrastructure.Connectors
 {
     public class SleeperConnector : ISleeperConnector
     {
+        private const string UserEndpoint = "/user";
+        private const string LeagueEndpoint = "/league";
+
+        private readonly HttpClient _httpClient;
+
+        public SleeperConnector(IHttpClientFactory httpClientFactory)
+        {
+            _httpClient = httpClientFactory.CreateClient("Sleeper");
+        }
+
         public Task<League> GetLeague(long leagueId)
         {
             throw new NotImplementedException();
@@ -25,19 +37,22 @@ namespace Wagr.Infrastructure.Connectors
             throw new NotImplementedException();
         }
 
-        public Task<User> GetUserByUserId(string userId)
+        public async Task<User> GetUserByUserId(string userId)
         {
-            throw new NotImplementedException();
+            var userResponse = await _httpClient.GetAsync($"{UserEndpoint}/{userId}");
+            return await userResponse.Content.ReadFromJsonAsync<User>();
         }
 
-        public Task<User> GetUserByUsername(string username)
+        public async Task<User> GetUserByUsername(string username)
         {
-            throw new NotImplementedException();
+            var userResponse = await _httpClient.GetAsync($"{UserEndpoint}/{username}");
+            return await userResponse.Content.ReadFromJsonAsync<User>();
         }
 
-        public Task<List<League>> GetUsersLeagues(string userId, int year, string sport = "nfl")
+        public async Task<List<League>> GetUsersLeagues(string userId, int year, string sport = "nfl")
         {
-            throw new NotImplementedException();
+            var usersLeaguesResponse = await _httpClient.GetAsync($"{UserEndpoint}/{userId}{LeagueEndpoint}/{sport}/{year}");
+            return await usersLeaguesResponse.Content.ReadFromJsonAsync<List<League>>();
         }
     }
 }
