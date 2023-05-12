@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net.Http.Json;
 using Wagr.Domain.Interfaces.Connectors;
 using Wagr.Domain.Models.Responses.Sleeper;
 
@@ -22,19 +16,22 @@ namespace Wagr.Infrastructure.Connectors
             _httpClient = httpClientFactory.CreateClient("Sleeper");
         }
 
-        public Task<League> GetLeague(long leagueId)
+        public async Task<League> GetLeague(long leagueId)
         {
-            throw new NotImplementedException();
+            var leagueResponse = await _httpClient.GetAsync($"{LeagueEndpoint}/{leagueId}");
+            return await leagueResponse.Content.ReadFromJsonAsync<League>();
         }
 
-        public Task<List<Matchup>> GetLeagueMatchupsByWeek(long leagueId, int week)
+        public async Task<List<Matchup>> GetLeagueMatchupsByWeek(long leagueId, int week)
         {
-            throw new NotImplementedException();
+            var matchupsResponse = await _httpClient.GetAsync($"{LeagueEndpoint}/{leagueId}/matchups/{week}");
+            return await matchupsResponse.Content.ReadFromJsonAsync<List<Matchup>>();
         }
 
-        public Task<User> GetLeagueUsers(long leagueId)
+        public async Task<User> GetLeagueUsers(long leagueId)
         {
-            throw new NotImplementedException();
+            var leagueUsersResponse = await _httpClient.GetAsync($"{LeagueEndpoint}/{leagueId}/users");
+            return await leagueUsersResponse.Content.ReadFromJsonAsync<User>();
         }
 
         public async Task<User> GetUserByUserId(string userId)

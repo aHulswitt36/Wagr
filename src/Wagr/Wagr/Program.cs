@@ -13,6 +13,8 @@ using System.Net.Http.Headers;
 using MudBlazor.Services;
 using BlazorState;
 using System.Reflection;
+using Wagr.Domain.Interfaces.Connectors;
+using Wagr.Infrastructure.Connectors;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -42,6 +44,8 @@ builder.Services.AddTransient<IPaymentsQuery, PaymentsQuery>();
 
 builder.Services.AddTransient<ICirclePaymentsRepo, CirclePaymentsRepo>();
 builder.Services.AddTransient<ICircleAccountsRepo, CircleAccountsRepo>();
+
+builder.Services.AddTransient<ISleeperConnector, SleeperConnector>(); 
 
 builder.Services.AddMudServices();
 await builder.Build().RunAsync();
