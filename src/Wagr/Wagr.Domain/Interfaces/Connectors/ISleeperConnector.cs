@@ -14,7 +14,7 @@ namespace Wagr.Domain.Interfaces.Connectors
 
         Task<List<League>> GetUsersLeagues(string userId, int year, string sport = "nfl");
         Task<League> GetLeague(long leagueId);
-        Task<User> GetLeagueUsers(long leagueId);
+        Task<List<User>> GetLeagueUsers(long leagueId);
         Task<List<Matchup>> GetLeagueMatchupsByWeek(long leagueId, int week);
 
     }

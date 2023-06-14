@@ -1,13 +1,15 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
 using Wagr.Domain.Interfaces.Connectors;
 using Wagr.Domain.Models.Responses.Sleeper;
+using Wagr.Domain.Settings;
 
 namespace Wagr.Infrastructure.Connectors
 {
     public class SleeperConnector : ISleeperConnector
     {
-        private const string UserEndpoint = "/user/";
-        private const string LeagueEndpoint = "/league/";
+        private const string UserEndpoint = "user/";
+        private const string LeagueEndpoint = "league/";
 
         private readonly HttpClient _httpClient;
 
@@ -28,10 +30,10 @@ namespace Wagr.Infrastructure.Connectors
             return await matchupsResponse.Content.ReadFromJsonAsync<List<Matchup>>();
         }
 
-        public async Task<User> GetLeagueUsers(long leagueId)
+        public async Task<List<User>> GetLeagueUsers(long leagueId)
         {
             var leagueUsersResponse = await _httpClient.GetAsync($"{LeagueEndpoint}{leagueId}/users");
-            return await leagueUsersResponse.Content.ReadFromJsonAsync<User>();
+            return await leagueUsersResponse.Content.ReadFromJsonAsync<List<User>>();
         }
 
         public async Task<User> GetUserByUserId(string userId)
@@ -48,7 +50,7 @@ namespace Wagr.Infrastructure.Connectors
 
         public async Task<List<League>> GetUsersLeagues(string userId, int year, string sport = "nfl")
         {
-            var usersLeaguesResponse = await _httpClient.GetAsync($"{UserEndpoint}{userId}{LeagueEndpoint}{sport}/{year}");
+            var usersLeaguesResponse = await _httpClient.GetAsync($"{UserEndpoint}{userId}/leagues/{sport}/{year}");
             return await usersLeaguesResponse.Content.ReadFromJsonAsync<List<League>>();
         }
     }

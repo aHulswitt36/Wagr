@@ -12,7 +12,7 @@ namespace Wagr.Domain.Models.Responses.Sleeper
         [JsonPropertyName("username")]
         public string UserName { get; set; }
         [JsonPropertyName("user_id")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         [JsonPropertyName("display_name")]
         public string DisplayName { get; set; }
 
