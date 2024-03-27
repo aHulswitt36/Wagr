@@ -3,25 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wagr", "Wagr\Wagr.csproj", "{1231DD6B-CDA1-4D62-8F98-6B810E8AFB74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wagr", "Client\Wagr\Wagr.csproj", "{1231DD6B-CDA1-4D62-8F98-6B810E8AFB74}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wagr.Domain", "Wagr.Domain\Wagr.Domain.csproj", "{ADC40E99-13DA-45EA-848E-CEECE800F37F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wagr.Domain", "Server\Wagr.Domain\Wagr.Domain.csproj", "{ADC40E99-13DA-45EA-848E-CEECE800F37F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wagr.Application", "Wagr.Application\Wagr.Application.csproj", "{C5CAF85D-39B0-451E-9288-43AD2D2A77F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wagr.Application", "Server\Wagr.Application\Wagr.Application.csproj", "{C5CAF85D-39B0-451E-9288-43AD2D2A77F0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wagr.Infrastructure", "Wagr.Infrastructure\Wagr.Infrastructure.csproj", "{79E74C28-2291-4F89-BA3D-CBD2C1C13B1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wagr.Infrastructure", "Server\Wagr.Infrastructure\Wagr.Infrastructure.csproj", "{79E74C28-2291-4F89-BA3D-CBD2C1C13B1C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{52C44C2E-3E5E-4E11-99EA-CDE942A192B6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{AD940CFE-0694-4762-9B6D-29749469A7D8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wagr.Api", "Wagr.Api\Wagr.Api.csproj", "{464AAD22-3C22-46DC-A8BF-55A0EBCDD4CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wagr.Api", "Server\Wagr.Api\Wagr.Api.csproj", "{464AAD22-3C22-46DC-A8BF-55A0EBCDD4CB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{5C727F7C-0D50-481B-8F8F-BEDCECB1F6D4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{8DE0395A-C48A-4902-A0A2-5E45D6523A5B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wagr.ClientInfrastructure", "Wagr.ClientInfrastructure\Wagr.ClientInfrastructure.csproj", "{F49FEF73-CA97-4E9E-B30F-D54641549931}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wagr.ClientInfrastructure", "Client\Wagr.ClientInfrastructure\Wagr.ClientInfrastructure.csproj", "{F49FEF73-CA97-4E9E-B30F-D54641549931}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Wagr.Domain.Exceptions;
+using System;
 using Wagr.Domain.Models.DTO.Requests.Sleeper;
 using Wagr.Domain.Models.Responses.Sleeper;
 
